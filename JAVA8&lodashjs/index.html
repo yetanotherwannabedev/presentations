@@ -184,7 +184,7 @@
 
                             unfilteredStuffs.stream()
                                             .filter(someStuff ->
-                                                type.equals(someStuff.getType) &&
+                                                type.equals(someStuff.getType()) &&
                                                     someStuff.isActive())
                                             .collect(Collectors.toList();
 

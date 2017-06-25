@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+        <title>reveal.js</title>
+        <link rel='stylesheet' href='css/reveal.css'>
+        <link rel='stylesheet' href='css/theme/night.css'>
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel='stylesheet' href='lib/css/zenburn.css'>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
+        <div class='reveal'>
+            <div class='slides'>
+                <!-- INTRO -->
+                <section>
+                    <section>
+                        <h2>JavaScript z lukrową polewą</h2>
+                        <h4>Say hello to TypeScript</h4>
+                        <h7>Krzysztof Cywiński</h7>
+                    </section>
+                </section>
+                <!-- SUBINTRO -->
+                <section>
+                    <section>
+                        <p>
+                            <img class='header-logo' src=imgs/js-logo.png></img>
+                            <img class='header-logo' src=imgs/ts-logo.png></img>
+                        </p>
+                        <p>
+                            From <span class='highlight'>ES5 </span>
+                            through <span class='highlight'>ES2015 </span>
+                            to <span class='highlight'>TypeScript </span>
+                        </p>
+                    </section>
+                </section>
+                <!-- ES5 -->
+                <section>
+                    <section>
+                        <h2 class='highlight-js'>ES5</h2>
+                    </section>
+                    <section>
+                        <h3>HOISTING</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var myFunction = function() {
+                                console.log(insideVar); // undefined
+                                var insideVar = 'insider';
+                                console.log(insideVar); // 'insider'
+                            };
+                            myFunction();
+                            </code>
+                        </pre>
+                        <p>Following code is the same as above</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var myFunction = function() {
+                                var insideVar;
+                                console.log(insideVar); // undefined
+                                insideVar = 'insider';
+                                console.log(insideVar); // 'insider'
+                            };
+                            myFunction();
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>OBJECT LITERALS</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var emptyObject = {},
+                                object = {
+                                    param1 : 'I am param1',
+                                    param2 : 'I am param2'
+                            };
+                                
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>FUNCTION LITERALS</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var myFunction = function() {
+                                    console.log('I am a ...');
+                                },
+                                myObject = {
+                                    sayYourName: function() {
+                                        console.log('I am a ...');
+                                }
+                            };
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>SCOPE</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            // Scope 1
+                            var fn1 = function() {
+                                // Scope 2
+                                var fn2 = function() {
+                                    // Scope 3
+                                };
+                            };
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>SCOPE - example</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var a = 'a',
+                                b = 'b',
+                                fn = function() {
+                                    var b = 'be',
+                                        c = 'c';
+                                    // a = 'a', b = 'be', c = 'c'
+                                };
+                            // a = 'a', b = 'b', c = undefined
+                            fn();
+                            // a = 'a', b = 'be', c = undefined
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>CLOSURE</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var factory = function(param) {
+                                    var greeting = 'Hello my name is ';
+                                    return {
+                                       sayHi: function() {
+                                           return greeting + param;
+                                       }
+                                    };
+                                },
+                                johnExample = factory('John');
+                            johnExample.sayHi(); // 'Hello my name is John'
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>IIFE</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var johnExample = (function() {
+                                    var greeting = 'Hello my name is John Example';
+                                    return {
+                                       sayHi: function() {
+                                           return greeting;
+                                       }
+                                    };
+                                })();
+                            johnExample.sayHi(); // 'Hello my name is John Example'
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>CLOSURE vs IIFE</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var name = 'John',
+                                factory = function(param) {
+                                    var greeting = 'Hello my name is ';
+                                    return {
+                                       sayHi: function() {
+                                           return greeting + param;
+                                       }
+                                    };
+                                };
+                            name = 'Johnny';
+                            johnExample = factory(name);
+                            johnExample.sayHi(); // Hello my name is Johnny
+                            </code>
+                            <code class='javascript hljs' data-trim>
+                            var name = 'John',
+                                johnExample = (function(param) {
+                                    var greeting = 'Hello my name is ';
+                                    return {
+                                       sayHi: function() {
+                                           return greeting + param;
+                                       }
+                                    };
+                                })(name);
+                            name = 'Johnny';
+                            johnExample.sayHi(); // Hello my name is John
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>CONSTRUCTOR FUNCTION</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            var Person = function() {
+                                    this.firstName = 'John';
+                                    this.lastName = 'Example';
+                                },
+                                johnExample;
+
+                             Person.prototype.sayHi = function() {
+                                 return 'Hi, I am ' + this.firstName + ' ' + this.lastName;
+                             };
+
+                             johnExample = new Person();
+                             johnExample.sayHi(); // 'Hi, I am John Example'
+                             </code>
+                        </pre>
+                    </section>
+                </section>
+                <!-- ES2015 -->
+                <section>
+                    <section>
+                        <h2 class='highlight-js'>ES2015 a.k.a. ES6</h2>
+                    </section>
+                    <section>
+                        <h3>LET</h3>
+                        <p>Block level scope</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            let someGuysName = 'John',
+                                fn = (function() {
+                                    let someGuysName = 'Johnny';
+                                })();
+
+                            console.log(someGuysName); // 'John'
+                            </code>
+                        </pre>
+                        <p>Is not hoisted</p>
+                        <pre>
+                           <code class='javascript hljs' data-trim>
+                           console.log(ex); // ReferenceError: ex is not defined
+                           let ex = 'example';
+                           console.log(ex); 'example'
+                           </code>
+                        </pre>
+                    </section>
+                     <section>
+                        <h3>CONST</h3>
+                        <p>Block level scope</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            const someGuysName = 'John',
+                                fn = (function() {
+                                    const someGuysName = 'Johnny';
+                                })();
+                            console.log(someGuysName); // 'John'
+                            </code>
+                        </pre>
+                        <p>Is not hoisted</p>
+                        <pre>
+                           <code class='javascript hljs' data-trim>
+                           console.log(ex); // ReferenceError: ex is not defined
+                           let ex = 'example';
+                           console.log(ex); 'example'
+                           </code>
+                        </pre>
+                        <p>Immutable after craetion</p>
+                        <pre>
+                           <code class='javascript hljs' data-trim>
+                           const ex = 'example';
+                           ex = 'new example' // TypeError: Assignment to constant variable.
+                           </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>CLASS</h3>
+                        <p>Syntactic sugar</p>
+                        <p>Is not hoisted</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            class Person {
+                                constructor() {
+                                    this.name = 'John';
+                                }
+                            };
+                            person = new Person();
+                            console.log(person.name); // 'John'
+                            </code>
+                        </pre>
+                        <p>is equivalent for</p>
+                        <pre>
+                           <code class='javascript hljs' data-trim>
+                           var Person = (function() {
+                                   function A() {
+                                       this.name = 'John';
+                                   }
+                                   return A;
+                           }());
+                           person = new Person();
+                           console.log(person.name); // 'John'
+                           </code>
+                        </pre>
+                    </section>
+                     <section>
+                        <h3>CLASS : extends</h3>
+                        <pre>
+                           <code class='javascript hljs' data-trim>
+                            class Example {
+                                constructor() {
+                                    this.lastName = 'Example';
+                                }
+                            };
+                            class John extends Example {
+                                constructor() {
+                                    super();
+                                    this.firstName = "John";
+                                }
+                            };
+                            person = new John();
+                            console.log(person.firstName); // 'John'
+                            console.log(person.lastName); // 'Example'
+                           </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>CLASS : getters setters</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            class Person {
+                                 constructor(firstName) {
+                                     this._firstName = firstName;
+                                 }
+                                 get firstName() {
+                                     return this._firstName.toUpperCase();
+                                 }
+                                 set firstName(firstName) {
+                                     if (firstName) {
+                                         this._firstName = firstName;
+                                     }
+                                 }
+                            }
+                           </code>
+                           <code class='javascript hljs' data-trim>
+                            john = new Person('john');
+                            console.log(john.firstName); // 'JOHN'
+                            john.firstName = '';
+                            console.log(john.firstName); // 'JOHN'
+                            john.firstName = 'johnny';
+                            console.log(john.firstName); // 'JOHNNY'
+                           </code>
+                        </pre>
+                        <p>and more...</p>
+                    </section>
+                    <section>
+                        <h3> more</h3>
+                        <p>static functions</p>
+                        <p>string interpolation</p>
+                        <p>fat arrow function</p>
+                        <p>iterator</p>
+                        <p>new array operators like spread etc.</p>
+                        <p>advanced types like set, map, weakSet, weakMap promise, proxy</p>
+                        <p>modules</p>
+                    </section>
+                </section>
+                <!-- ES5 -->
+                <section>
+                    <section>
+                        <h2 class='highlight-ts'>TypeScript</h2>
+                    </section>
+                    <section>
+                        <h3>Intro</h3>
+                        <p>TypeScript is a <span class=highlight-ts> typed superset </span> of JavaScript that <span class=highlight-ts> compiles </span> to plain JavaScript</p>
+                        <p>Invented by Microsoft</p>
+                        <span class=highlight-ts> Valid JavaScript code is valid TypeScript code </span>
+                    </section>
+                    <section>
+                        <h3>Benefits</h3>
+                        <p>Fills out the feature gap <small>Anders Hejlsberg</small></p>
+                    </section>
+                </section>
+            </div>
+        </div>
+        <script src='lib/js/head.min.js'></script>
+        <script src='js/reveal.js'></script>
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [{
+                    src: 'plugin/markdown/marked.js'
+                }, {
+                    src: 'plugin/markdown/markdown.js'
+                }, {
+                    src: 'plugin/notes/notes.js',
+                    async: true
+                }, {
+                    src: 'plugin/highlight/highlight.js',
+                    async: true,
+                    callback: function() {
+                        hljs.initHighlightingOnLoad();
+                    }
+                }]
+            });
+        </script>
+    </body>
+</html>
