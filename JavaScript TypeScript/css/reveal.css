@@ -1489,6 +1489,11 @@ body {
     background: transparent;
 }
 
+.reveal section .image {
+    border: none;
+    background: transparent;
+}
+
 .reveal section .highlight {
     color : rgb(166, 126, 62);
 }

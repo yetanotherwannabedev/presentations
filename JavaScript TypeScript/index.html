@@ -282,7 +282,7 @@
                                     this.name = 'John';
                                 }
                             };
-                            person = new Person();
+                            let person = new Person();
                             console.log(person.name); // 'John'
                             </code>
                         </pre>
@@ -290,12 +290,12 @@
                         <pre>
                            <code class='javascript hljs' data-trim>
                            var Person = (function() {
-                                   function A() {
+                                   function Person() {
                                        this.name = 'John';
                                    }
-                                   return A;
+                                   return Person;
                            }());
-                           person = new Person();
+                           var person = new Person();
                            console.log(person.name); // 'John'
                            </code>
                         </pre>
@@ -375,6 +375,305 @@
                     <section>
                         <h3>Benefits</h3>
                         <p>Fills out the feature gap <small>Anders Hejlsberg</small></p>
+                    </section>
+                    <section>
+                        <h3>Live demo</h3>
+                        <p>Type checker</p>
+                        <p>New Type</p>
+                        <p>NPE and Undefined solution!oneoneone</p>
+                        <p>OOP... seriously man?</p>
+                        <h3>comming up soon</h3>
+                        <p>if(isIntenet){ statement completion }</p>
+                        <p>pstryczek into MSs nose</p>
+                    </section>
+                    <section>
+                        <h3>Thanks for your attention</h3>
+                        <p>see you on the part 2</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                    <h2>JavaScript z lukrową polewą</h2>
+                        <h4>TypeScript design patterns</h4>
+                        <h7>Krzysztof Cywiński</h7>
+                    </section>
+                    <section>
+                        <h3>OOP design pattern</h3>
+                        <p> yawn... </p>
+                    </section>
+                    <section>
+                        <h3>OOP design pattern</h3>
+                        <p> Factory </p>
+                        <p> Abstract Factory </p>
+                        <p> Builder </p>
+                        <p> Singleton </p>
+                    </section>
+                    <section>
+                        <p> Composite Pattern </p>
+                        <p> Decorator Pattern </p>
+                        <p> Adapter Patterm </p>
+                        <p> Fasade Pattern </p>
+                        <p> Proxy Pattern </p>
+                        <p> Command Pattern </p>
+                        <p> Mediator Pattern </p>
+                    </section>
+                    <section>
+                        <p> Strategy Pattern </p>
+                        <p> State Pattern </p>
+                        <p> Template Pattern </p>
+                        <p class='highlight'> Observer Pattern </p>
+                        <p> Visitor Pattern </p>
+                    </section>
+                    <section>
+                        <h3> Promises (ES6) </h3>
+                        <img class='image' src='imgs/promises.png'> </img>
+                    </section>
+                    <section>
+                        <h3> Promise-based web architecture </h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                function process(callback) {
+                                    stepOne((error, resultOne) => {
+                                        if (error) {
+                                            callback(error);
+                                            return;
+                                        }
+                                        stepTwo(resultOne, (error, resultTwo) => {
+                                            if (error) {
+                                                callback(error);
+                                                return;
+                                            }
+                                            callback(undefined, resultTwo + 1);
+                                        });
+                                    });
+                                }
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3> Promise-based web architecture </h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                function process() {
+                                     return stepOne()
+                                         .then(result => stepTwo(result))
+                                         .then(result => result + 1);
+                                }
+                            </code>
+                        </pre>
+                        <p>Watch out! JQuery 3.0 released in June 2016 was first version compliant with ES2015 spec</p>
+                    </section>
+                    <section>
+                        <h3> How to </h3>
+                        <p> promisfy existing modules or libs(1) </p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                import * as FS from 'fs';
+                
+                FS.readFile('some-file.txt', 'utf-8', (error, text) => {
+                    if (error) {
+                        console.error(error);
+                        return;
+                    }
+                    console.log('Content:', text);
+                });
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3> How to </h3>
+                        <p> promisfy existing modules or libs(2) </p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                  function readFile(path: string, options: any): Promise<string> {
+                       return new Promise((resolve, reject) => {
+                           FS.readFile(path, options, (error, result) => {
+                               if (error) {
+                                   reject(error);
+                               } else {
+                                   resolve(result);
+                               }
+                           });
+                       });
+                  }
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3> How to </h3>
+                        <p> promisfy existing modules or libs(3) </p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                      FS.readFile('some-file.txt', 'utf-8')
+                        .then(text => {
+                            console.log('Content:', text);
+                         })
+                        .catch(reason => {
+                            Console.error(reason);
+                         });
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>Modules</h3>
+                        <p>example(1)</p>
+                        <pre>
+Validator.ts
+                            <code class='javascript hljs' data-trim>
+                            export interface Validator {
+                               isValid(s: string): boolean;
+                            }
+                            </code>
+LettersValidator.ts
+                            <code class='javascript hljs' data-trim>
+                            import { Validator } from "./Validator";
+                            
+                            const lettersRegexp = /[A-Za-z]+$/;
+                            
+                            export class LettersOnlyValidator implements StringValidator {
+                                isAcceptable(s: string) {
+                                    return lettersRegexp.test(s);
+                                }
+                            }
+                            </code>
+                            </pre>
+                    </section>
+                    <section>
+                        <h3>Modules</h3>
+                        <p>example(2)</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                            import { LettersOnlyValidator } from "./LettersOnlyValidator";
+                            
+                            let strings = ["Hello", "98052", "101"];
+                            
+                            let validator = new LettersOnlyValidator();
+                            
+                            strings.forEach(s => {
+                                    console.log('"${ s }" - "${validator.isAcceptable(s) ?
+                                        "matches" : "does not match"}');
+                                }
+                            });
+
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>How to</h3>
+                        <p>modularize project(1)</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                moneyMaker
+                                ├─product
+                                |   index.ts
+                                |   order.ts
+                                |   shipping.ts
+                                |
+                                └─user
+                                    index.ts
+                                    account.ts
+                                    statistics.ts
+                            </code>
+                            <code class='javascript hljs' data-trim>
+                                const Order = require('../moneyMaker/product/order');
+                                import * as Order from '../moneyMaker/product/order';
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>How to</h3>
+                        <p>modularize project(2)</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                moneyMaker
+                                ├─product
+                                |   index.ts <=
+                                |   order.ts
+                                |   shipping.ts
+                                ...
+                            </code>
+                            <code class='javascript hljs' data-trim> 
+                                import * as Order from './order';
+                                import * as Shipping from './shipping';
+                                
+                                export { Order, Shipping }
+                            </code>
+                            <code class='javascript hljs' data-trim> 
+                                export * from './order';
+                                export * from './shipping';
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>Asynchronous pattern(1)</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                type Callback = () => void;
+
+                                let isReady = false;
+                                let callbacks: Callback[] = [];
+
+                                setTimeout(()=> {
+                                    callbacks.forEach(callback => callback());
+                                    callbacks = undefined;
+                                    }, 100);
+
+                                export function ready(callback: Callback): void {
+                                    if(!callbacks){
+                                        callback();
+                                    } else {
+                                        callbacks.push(callback);
+                                    }
+                                }
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>Asynchronous pattern(2)</h3>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                import { ready } from './foo';
+
+                                let i = 0;
+                                ready(() => {
+                                    console.log(i);
+                                });
+
+                                i++;
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>Asynchronous pattern(3)</h3>
+                        <p>'FIX'</p>
+                        <pre>
+                            <code class='javascript hljs' data-trim>
+                                export function ready(callback: Callback): void {
+                                    if(!callbacks){
+                                        setImmedaite(() => callback());
+                                    } else {
+                                        callbacks.push(callback);
+                                    }
+                                }
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h3>Last one sprint to go</h3>
+                        <p>SOLID principles</p>
+                    </section>
+                    <section>
+                        <h3>SOLID principles</h3>
+                        <ul>
+                        <p>Single responsibility principle</p>
+                        <p>Open-closed principle</p>
+                        <p>Liskov substitution principle</p>
+                        <p>Interface segregation principle</p>
+                        <p>Dependency inversion principle</p>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Thanks for your attention</h3>
                     </section>
                 </section>
             </div>
