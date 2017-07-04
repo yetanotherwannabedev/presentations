@@ -1,3 +1,4 @@
+"use strict";
 (function (s) {
     if (s) {
         s;

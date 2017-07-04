@@ -121,8 +121,8 @@
                             var a = 'a',
                                 b = 'b',
                                 fn = function() {
-                                    var b = 'be',
-                                        c = 'c';
+                                    var c = 'c';
+                                    b = 'be';
                                     // a = 'a', b = 'be', c = 'c'
                                 };
                             // a = 'a', b = 'b', c = undefined
@@ -152,20 +152,22 @@
                         <h3>IIFE</h3>
                         <pre>
                             <code class='javascript hljs' data-trim>
-                            var johnExample = (function() {
+                            var i = 'john',
+                                johnExample = (function(name) {
                                     var greeting = 'Hello my name is John Example';
                                     return {
                                        sayHi: function() {
                                            return greeting;
                                        }
                                     };
-                                })();
+                                })(i);
+                            i = 'Joohnhy';
                             johnExample.sayHi(); // 'Hello my name is John Example'
                             </code>
                         </pre>
                     </section>
                     <section>
-                        <h3>CLOSURE vs IIFE</h3>
+                       <h3>CLOSURE vs IIFE</h3>
                         <pre>
                             <code class='javascript hljs' data-trim>
                             var name = 'John',

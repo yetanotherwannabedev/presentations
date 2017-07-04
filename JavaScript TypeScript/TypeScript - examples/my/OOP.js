@@ -1,8 +1,9 @@
+"use strict";
 var Circle = (function () {
-    function Circle(radius) {
+    function Circle(paramRadius) {
         var _this = this;
-        this.radius = radius;
         this.getArea = function () { return Math.PI * Math.pow(_this.radius, 2); };
+        this.radius = paramRadius;
     }
     return Circle;
 }());

@@ -1,11 +1,12 @@
 type ShapeNoOOP =
     { kind: 'circle', radius: number } |
+    { kind: 'square', a: number } |
     { kind: 'rectangle', w: number, h: number };
 
 
-// function assertNever(obj: never){
-//     throw new Error('Unexpected object type');
-// }
+function assertNever(obj: never) {
+    throw new Error('Unexpected object type');
+}
 
 function getArea(shape: ShapeNoOOP) {
     switch (shape.kind) {
@@ -13,10 +14,12 @@ function getArea(shape: ShapeNoOOP) {
             return Math.PI * shape.radius ** 2;
         case ('rectangle'):
             return shape.h * shape.w;
+        case ('square'):
+            return shape.a ** 2;
     }
-    // shape;
-    // assertNever(shape);
-    throw new Error('Unexpected object type');
+    shape;
+    assertNever(shape);
+    // throw new Error('Unexpected object type');
 }
 
 const shape1: ShapeNoOOP = { kind: 'circle', radius: 4 };
